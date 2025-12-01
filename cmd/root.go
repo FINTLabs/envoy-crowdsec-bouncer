@@ -55,7 +55,11 @@ func init() {
 
 	rootCmd.Flags().Bool("waf.enabled", false, "")
 
-	viper.BindPFlags(rootCmd.Flags())
+	err := viper.BindPFlags(rootCmd.Flags())
+	if err != nil {
+		println("Error binding flags")
+		os.Exit(-1)
+	}
 }
 
 func initConfig() {
