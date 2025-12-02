@@ -29,8 +29,9 @@
           packages = with pkgs; [
             # go (version is specified by overlay)
             go
-            gotools
+            go-tools
             golangci-lint
+            govulncheck
             cobra-cli
             mockgen
           ];
