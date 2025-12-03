@@ -47,3 +47,5 @@ jobs:
         if: always()
         with:
           config: ./.testcoverage.yaml
+          git-token: ${{ github.ref_name == 'main' && secrets.GITHUB_TOKEN || '' }}
+          git-branch: badges 
