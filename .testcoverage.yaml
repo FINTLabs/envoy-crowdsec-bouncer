@@ -1,5 +1,8 @@
+profile: _output/cover.out
+
 ### Should be tuned later ###
 # threshold:
 #   file: 70
 #   package: 80
 #   total: 95
+

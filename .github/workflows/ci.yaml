@@ -9,51 +9,41 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents:      read
+      actions:       read
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.0
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6.1.0
         with:
-          go-version: '1.25.x'
+          go-version: '1.25.5'
           cache: true
 
-      - name: Install staticcheck and govulncheck
-        run: |
-          go install honnef.co/go/tools/cmd/staticcheck@latest
-          go install golang.org/x/vuln/cmd/govulncheck@latest
+      - name: Install dependencies
+        run: make mod-download
 
-      - name: Install golangci-lint
-        uses: golangci/golangci-lint-action@v9.1.0
-        with:
-          version: latest
-          install-only: true
-
-      - name: Run Makefile checks
+      - name: Run Analze
         run: |
           make lint
           make vet
           make check
     
-      - name: Run tests with coverage
-        run: |
-          mkdir -p build
-          go test ./... -covermode=atomic -coverprofile=build/coverage.out -coverpkg=./... -json > build/testreport.json
+      - name: Run tests with coverage and report
+        run: make test-with-coverage-and-report
 
       - name: Convert test report to JUnit
-        uses: dorny/test-reporter@v2
+        uses: dorny/test-reporter@v2.3.0
         if: always()
         with:
           name: Go Tests
-          path: build/testreport.json
+          path: _output/test-report.json
           reporter: golang-json
 
-
-      - name: check test coverage
-        uses: vladopajic/go-test-coverage/action/source@v2
+      - name: Check test coverage
+        uses: vladopajic/go-test-coverage/action/source@v2.18.0
         if: always()
         with:
           config: ./.testcoverage.yaml
-          profile: build/coverage.out
