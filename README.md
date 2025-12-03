@@ -2,6 +2,8 @@
 
 Small gRPC service implementing Envoy's `ext_proc` API to bounce requests using CrowdSec decisions.
 
+![coverage](https://raw.githubusercontent.com/FINTLabs/envoy-crowdsec-bouncer/refs/heads/badges/.badges/main/coverage.svg)
+
 ## Layout
 - `cmd`: command.
 - `internal/extproc`: Envoy ExternalProcessor implementation.
