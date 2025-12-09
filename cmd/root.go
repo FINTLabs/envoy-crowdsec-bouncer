@@ -1,14 +1,12 @@
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
 	"log/slog"
 	"os"
 	"strings"
 	"time"
 
-	"github.com/mattis/envoy-crowdsec-bouncer/internal/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -17,22 +15,6 @@ var cfgFile string
 
 var rootCmd = &cobra.Command{
 	Use: "envoy-bouncer",
-
-	RunE: func(cmd *cobra.Command, args []string) error {
-		v := viper.GetViper()
-		config, err := config.New(v)
-		if err != nil {
-			return err
-		}
-
-		data, err := json.Marshal(config)
-		if err != nil {
-			return err
-		}
-		println(string(data))
-
-		return nil
-	},
 }
 
 func Execute() error {
