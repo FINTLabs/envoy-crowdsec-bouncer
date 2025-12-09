@@ -30,6 +30,9 @@ mod-tidy:
 mod-download:
 	go mod download all
 
+.PHONY: clean
+clean:
+	rm -rf $(OUTPUT_DIR)
 
 #----------------------------------------------------------------------------------
 # Analyze
